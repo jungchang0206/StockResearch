@@ -1,5 +1,8 @@
 import requests
 import os
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -183,7 +186,7 @@ def plot_metric_over_time(facts, tag, label=None, unit="USD"):
         plt.ylabel(f"{label or tag} ({unit})")
         plt.grid(True, linestyle="--", alpha=0.7)
         plt.tight_layout()
-        # plt.show()  
+        # plt.show()
     except Exception as e:
         print(f"Error plotting {label or tag}: {e}")
 

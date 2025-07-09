@@ -2,24 +2,26 @@
 <html>
 <head>
     <title>Stock Research</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .error { color: red; }
-        form { margin: 20px 0; }
-        input, button { padding: 8px; }
-        .plot { margin: 20px 0; }
-        .metric { margin: 10px 0; font-weight: bold; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Stock Research Tool</h1>
-    <form method="POST">
-        <label for="ticker">Enter Stock Ticker:</label>
-        <input type="text" id="ticker" name="ticker" required>
-        <button type="submit">Search</button>
-    </form>
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
+    <div class="container">
+        <h1>📈 Stock Research Tool</h1>
+        
+        <form method="POST" class="search-form">
+            <div class="form-group">
+                <label for="ticker">Enter Stock Ticker Symbol:</label>
+                <input type="text" id="ticker" name="ticker" placeholder="e.g., AAPL, GOOGL, MSFT" required>
+            </div>
+            <button type="submit" class="search-button">
+                🔍 Search Stock Data
+            </button>
+        </form>
+        
+        {% if error %}
+            <p class="error">⚠️ {{ error }}</p>
+        {% endif %}
+    </div>
 </body>
 </html>

@@ -9,6 +9,8 @@ from stock_analysis import (
     get_latest_revenue_and_year,
     get_latest_gross_profit_and_year,
 )
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64

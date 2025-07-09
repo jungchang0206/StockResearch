@@ -2,87 +2,87 @@
 <html>
 <head>
     <title>Results for {{ ticker }}</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .plot-container { margin: 30px 0; }
-        .plot { width: 100%; margin: 10px 0; }
-        .metrics { display: flex; justify-content: space-around; margin: 20px 0; }
-        .metric { text-align: center; padding: 10px; background: #f5f5f5; border-radius: 5px; }
-        .back-link { display: block; margin-top: 20px; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Financial Data for {{ ticker }}</h1>
-    
-    <div class="metrics">
-        <div class="metric">
-            <h3>EPS</h3>
-            <p>${{ "%.2f"|format(eps) if eps else "N/A" }}</p>
+    <div class="container">
+        <h1>📊 Financial Data for <span class="stock-ticker">{{ ticker }}</span></h1>
+        
+        <div class="metrics">
+            <div class="metric">
+                <h3>💰 EPS (Earnings Per Share)</h3>
+                <p>${{ "%.2f"|format(eps) if eps else "N/A" }}</p>
+            </div>
+            <div class="metric">
+                <h3>💵 Revenue</h3>
+                <p>${{ "{:,.0f}".format(revenue) if revenue else "N/A" }}</p>
+            </div>
+            <div class="metric">
+                <h3>📈 Gross Profit</h3>
+                <p>${{ "{:,.0f}".format(gross_profit) if gross_profit else "N/A" }}</p>
+            </div>
         </div>
-        <div class="metric">
-            <h3>Revenue</h3>
-            <p>${{ "{:,.0f}".format(revenue) if revenue else "N/A" }}</p>
+        
+        <div class="plot-container">
+            <h2>📊 Revenue Over Time</h2>
+            {% if plot_images.revenue %}
+                <img class="plot" src="data:image/png;base64,{{ plot_images.revenue }}" alt="Revenue Plot">
+            {% else %}
+                <p>No data available for revenue.</p>
+            {% endif %}
         </div>
-        <div class="metric">
-            <h3>Gross Profit</h3>
-            <p>${{ "{:,.0f}".format(gross_profit) if gross_profit else "N/A" }}</p>
+        
+        <div class="plot-container">
+            <h2>💼 Operating Income Over Time</h2>
+            {% if plot_images.operating_income %}
+                <img class="plot" src="data:image/png;base64,{{ plot_images.operating_income }}" alt="Operating Income Plot">
+            {% else %}
+                <p>No data available for operating income.</p>
+            {% endif %}
+        </div>
+        
+        <div class="plot-container">
+            <h2>🎯 Net Income Over Time</h2>
+            {% if plot_images.net_income %}
+                <img class="plot" src="data:image/png;base64,{{ plot_images.net_income }}" alt="Net Income Plot">
+            {% else %}
+                <p>No data available for net income.</p>
+            {% endif %}
+        </div>
+        
+        <div class="plot-container">
+            <h2>📋 Shares Outstanding Over Time</h2>
+            {% if plot_images.shares_outstanding %}
+                <img class="plot" src="data:image/png;base64,{{ plot_images.shares_outstanding }}" alt="Shares Outstanding Plot">
+            {% else %}
+                <p>No data available for shares outstanding.</p>
+            {% endif %}
+        </div>
+        
+        <div class="plot-container">
+            <h2>💰 EPS Over Time</h2>
+            {% if plot_images.eps %}
+                <img class="plot" src="data:image/png;base64,{{ plot_images.eps }}" alt="EPS Plot">
+            {% else %}
+                <p>No data available for EPS.</p>
+            {% endif %}
+        </div>
+        
+        <div class="plot-container">
+            <h2>📈 Gross Profit Over Time</h2>
+            {% if plot_images.gross_profit_calc %}
+                <img class="plot" src="data:image/png;base64,{{ plot_images.gross_profit_calc }}" alt="Gross Profit Calculated Plot">
+            {% else %}
+                <p>No data available for gross profit.</p>
+            {% endif %}
+        </div>
+        
+        <div class="back-link">
+            <a href="{{ url_for('index') }}" class="back-button">
+                🔍 Search Another Stock
+            </a>
         </div>
     </div>
-    
-    <div class="plot-container">
-        <h2>Revenue Over Time</h2>
-        {% if plot_images.revenue %}
-            <img class="plot" src="data:image/png;base64,{{ plot_images.revenue }}" alt="Revenue Plot">
-        {% else %}
-            <p>No data available.</p>
-        {% endif %}
-    </div>
-    
-    <div class="plot-container">
-        <h2>Operating Income Over Time</h2>
-        {% if plot_images.operating_income %}
-            <img class="plot" src="data:image/png;base64,{{ plot_images.operating_income }}" alt="Operating Income Plot">
-        {% else %}
-            <p>No data available.</p>
-        {% endif %}
-    </div>
-    
-    <div class="plot-container">
-        <h2>Net Income Over Time</h2>
-        {% if plot_images.net_income %}
-            <img class="plot" src="data:image/png;base64,{{ plot_images.net_income }}" alt="Net Income Plot">
-        {% else %}
-            <p>No data available.</p>
-        {% endif %}
-    </div>
-    
-    <div class="plot-container">
-        <h2>Shares Outstanding Over Time</h2>
-        {% if plot_images.shares_outstanding %}
-            <img class="plot" src="data:image/png;base64,{{ plot_images.shares_outstanding }}" alt="Shares Outstanding Plot">
-        {% else %}
-            <p>No data available.</p>
-        {% endif %}
-    </div>
-    
-    <div class="plot-container">
-        <h2>EPS Over Time</h2>
-        {% if plot_images.eps %}
-            <img class="plot" src="data:image/png;base64,{{ plot_images.eps }}" alt="EPS Plot">
-        {% else %}
-            <p>No data available.</p>
-        {% endif %}
-    </div>
-    
-    <div class="plot-container">
-        <h2>Gross Profit Over Time</h2>
-        {% if plot_images.gross_profit_calc %}
-            <img class="plot" src="data:image/png;base64,{{ plot_images.gross_profit_calc }}" alt="Gross Profit Calculated Plot">
-        {% else %}
-            <p>No data available.</p>
-        {% endif %}
-    </div>
-    
-    <a href="/" class="back-link">Search another stock</a>
 </body>
 </html>
